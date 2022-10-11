@@ -21,11 +21,9 @@ class InitSets:
             this.PrintField()
             if this.playerTurn == 0: this.takeCandies = this.InputPlayer()
             else: 
-                this.takeCandies = this.BottakesCalc()
+                this.takeCandies = this.BotTakesCalc()
                 this.botStarting = True
 
-            
-            
             this.playersScore[this.playerTurn] += this.takeCandies
             this.totalCand -= this.takeCandies
 
@@ -36,23 +34,20 @@ class InitSets:
         if this.playerTurn == 1: print("Бот выиграл")
         else: print("Человек выиграл")
 
-    def BottakesCalc(this):
-        if this.totalCand <= 480: max = this.totalCand
-        else: max = 480
-        this.botTakes = random.randrange(0, max)
-        if this.botTakes == 0: this.botTakes = 1
+    def BotTakesCalc(this):
+        max = this.totalCand if this.totalCand <= 480 else 480
+        this.botTakes = random.randrange(1, max) if max > 1 else 1
         return this.botTakes
 
     def PrintField(this):
-        #if this.starting: botTakes = this.takeCandies
+        
         this.clear()
         print("На столе: ", this.totalCand, " конфет")
         print(f"У человека: {this.playersScore[0]} конфет.\tУ бота: {this.playersScore[1]} конфет")
         if this.botStarting: print(f"Бот взял: {this.botTakes} конфет")
 
     def TogglePlayer(this, player):
-        if player == 0: return 1
-        else: return 0
+        return 1 if player == 0 else 0
 
     def InputPlayer(this):
         while (True):
