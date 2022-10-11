@@ -15,7 +15,7 @@ class InitSets:
     def InitGameSets(this):
 
         this.gameField = [(lambda : ["*" for i in range(3)])() for x in range(3)]
-
+        this.indicator = "O"
         this.player = "First"
 
         while (this.CheckEmptyField()):
@@ -25,10 +25,10 @@ class InitSets:
             this.clear()
             this.PrintField()
             print("\nХод можно сделать")
-            if this.player == "First": this.indicator = "X"
-            else: this.indicator = "O"
 
-            a, b = map(int, input(f"{this.indicator} ход: ").split())
+            this.indicator = this.TogglePlayer(this.indicator)
+
+            a, b = this.InputPlayer()
             
             this.gameField[a-1][b-1] = this.indicator
             this.PrintField()
@@ -38,12 +38,23 @@ class InitSets:
                 print(f"{this.indicator} выиграли") 
                 return
             else: print("Вы еще не выиграли")
-
-            this.player = this.TogglePlayer(this.player)
             
+    def InputPlayer(this):
+        while (True):
+            try:
+                a, b = map(int, input(f"{this.indicator} ходят: ").split())
+            except:
+                print("Попробуйте еще раз")
+            else:
+                if a > 0 and a < 4:
+                    if b > 0 and b < 4: 
+                        if this.gameField[a-1][b-1] == "*": return a, b
+                    
+                print("Цифры введены не верно!")
+
     def TogglePlayer(this, player):
-        if player == "First": return "Second"
-        if player == "Second": return "First"
+        if player == "O": return "X"
+        if player == "X": return "O"
         
     def CheckEmptyField(this):
         for i in range(len(this.gameField)): 
@@ -56,7 +67,7 @@ class InitSets:
 
     def CheckGameWin(this, indicator):
 
-        # checking rows
+        # rows
         for i in range(3):
             winFlag = True
             for j in range(3):
@@ -65,7 +76,7 @@ class InitSets:
                     break
             if winFlag: return winFlag
 
-        # checking columns
+        # columns
         for i in range(3):
             winFlag = True
             for j in range(3):
@@ -74,7 +85,7 @@ class InitSets:
                     break
             if winFlag: return winFlag
 
-        # checking diagonals
+        # diagonal 1
         winFlag = True
         for i in range(3):
             if this.gameField[i][i] != indicator:
@@ -83,6 +94,7 @@ class InitSets:
 
         if winFlag: return winFlag
         
+        # diagonal 2
         winFlag = True
         for i in range(3):
             if this.gameField[i][2-i] != indicator:
