@@ -5,24 +5,21 @@ import random
 class InitSets:
     def __init__(this):
         this.clear = lambda: os.system("CLS")
-
         this.InitGameSets()
-        this.clear()
-        this.PrintField()
-        if this.anyoneWon: print(f"\n{this.indicator} выиграли")
-        else: print("\nНикто не выиграл")
+        this.GameMode()
+        this.GameResult()
+        
 
     def InitGameSets(this):
 
         this.gameField = [(lambda : ["*" for i in range(3)])() for x in range(3)]
         this.indicator = "O"
         this.player = "First"
+        this.anyoneWon = False
 
+    def GameMode(this):
         while (this.CheckEmptyField()):
-
-            this.anyoneWon = False
-        
-            this.clear()
+          
             this.PrintField()
             print("\nХод можно сделать")
 
@@ -31,14 +28,13 @@ class InitSets:
             a, b = this.InputPlayer()
             
             this.gameField[a-1][b-1] = this.indicator
-            this.PrintField()
             
             if this.CheckGameWin(this.indicator): 
                 this.anyoneWon = True
                 print(f"{this.indicator} выиграли") 
                 return
             else: print("Вы еще не выиграли")
-            
+
     def InputPlayer(this):
         while (True):
             try:
@@ -63,10 +59,15 @@ class InitSets:
 
 
     def PrintField(this):
+        this.clear()
         for i in range(len(this.gameField)): print(this.gameField[i])
 
-    def CheckGameWin(this, indicator):
+    def GameResult(this):
+        this.PrintField()
+        if this.anyoneWon: print(f"\n{this.indicator} выиграли")
+        else: print("\nНикто не выиграл")
 
+    def CheckGameWin(this, indicator):
         # rows
         for i in range(3):
             winFlag = True
