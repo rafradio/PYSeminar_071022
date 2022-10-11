@@ -40,15 +40,16 @@ class InitSets:
             except:
                 print("Попробуйте еще раз")
             else:
-                if a > 0 and a < 4:
-                    if b > 0 and b < 4: 
-                        if this.gameField[a-1][b-1] == "*": return a, b
+                if (a > 0 and a < 4) and (b > 0 and b < 4) and this.gameField[a-1][b-1] == "*": return a, b
+                # if a > 0 and a < 4:
+                #     if b > 0 and b < 4: 
+                #         if this.gameField[a-1][b-1] == "*": return a, b
                     
                 print("Цифры введены не верно!")
 
     def TogglePlayer(this, player):
-        if player == "O": return "X"
-        if player == "X": return "O"
+        return "X" if player == "O" else "O"
+
         
     def CheckEmptyField(this):
         for i in range(len(this.gameField)): 
