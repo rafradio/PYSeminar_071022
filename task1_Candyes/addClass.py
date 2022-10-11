@@ -5,15 +5,15 @@ import random
 class InitSets:
     def __init__(this):
         this.clear = lambda: os.system("CLS")
-        
         this.InitGameSets()
+        this.PlayMode()
         
     def InitGameSets(this):
         this.players = ["Первый", "Второй"]
         this.playersScore = [0, 0]
         this.playerTurn = random.randrange(0, 2)
         this.totalCand = 2021
-        this.PlayMode()
+        
 
     def PlayMode(this):
         while this.totalCand > 0:
@@ -22,7 +22,7 @@ class InitSets:
             this.takeCandies = this.InputPlayer()
             this.playersScore[this.playerTurn] += this.takeCandies
             this.totalCand -= this.takeCandies
-            
+
             if this.totalCand == 0: break
             this.playerTurn = this.TogglePlayer(this.playerTurn)
 
