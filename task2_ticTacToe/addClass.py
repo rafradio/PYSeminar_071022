@@ -31,9 +31,7 @@ class InitSets:
             
             if this.CheckGameWin(this.indicator): 
                 this.anyoneWon = True
-                print(f"{this.indicator} выиграли") 
                 return
-            else: print("Вы еще не выиграли")
 
     def InputPlayer(this):
         while (True):
